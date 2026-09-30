@@ -31,11 +31,14 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 24
-      - name: Instalar dependências e rodar o Cypress
+      # A action só instala e faz cache: no "command" dela as aspas chegam literais ao Cypress
+      # e o filtro de tags é ignorado. O shell trata as aspas corretamente.
+      - name: Instalar dependências
         uses: cypress-io/github-action@v6
         with:
-          browser: chrome
-          command: npx cypress run --browser chrome --expose "tags=${{ env.TAGS }}"
+          runTests: false
+      - name: Rodar o Cypress
+        run: npx cypress run --browser chrome --expose "tags=$TAGS"
       - name: Guardar screenshots das falhas
         if: failure()
         uses: actions/upload-artifact@v4
