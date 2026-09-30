@@ -1,0 +1,13 @@
+{
+  "cidade e país": "^.+, [A-Z]{2}$",
+  "horário local": "^\\d{1,2}:\\d{2} [AP]M$",
+  "temperatura": "^-?\\d+°$",
+  "descrição": "^[A-Za-z ]+$",
+  "sensação térmica": "^Feels like -?\\d+°$",
+  "vento": "^\\d+(\\.\\d+)? (m/s|mph)( [NSEW]{1,3})?$",
+  "umidade": "^\\d+%$",
+  "visibilidade": "^\\d+(\\.\\d+)?(km|mi)$",
+  "pressão": "^\\d+ hPa$",
+  "índice UV": "^\\d+(\\.\\d+)? UV$",
+  "ponto de orvalho": "^-?\\d+°[CF]$"
+}
