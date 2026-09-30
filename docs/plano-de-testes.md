@@ -5,7 +5,7 @@
 | Sistema sob teste (SUT) | https://openweathermap.org (página inicial — widget "Weather forecast") |
 | Framework | Cypress 16 + TypeScript + Cucumber (`@badeball/cypress-cucumber-preprocessor`) |
 | Casos de teste (BDD) | [`cypress/e2e/previsao-do-tempo.feature`](../cypress/e2e/previsao-do-tempo.feature), executável via Cucumber |
-| Versão do plano | 1.3 — CT034 (cross-browser) removido (2026-09-29) |
+| Versão do plano | 1.4 — tag `@defeito-conhecido` no CT037 (2026-09-29) |
 | Responsável | Victor Lopes |
 
 ### Histórico de versões
@@ -17,6 +17,7 @@
 | 1.1 | 2026-09-29 | Premissas validadas no site real. RN01, RN03, RN04, RN05, RN06 e RN10 ajustadas, RN08 descartada, CT037–CT040 incluídos, resultados de execução e defeitos candidatos registrados (seções 13 e 14). **Requer nova revisão**. |
 | 1.2 | 2026-09-29 | Automação migrada de Playwright para **Cypress + TypeScript + Cucumber**, com código em estilo simples. CT034 passou a cobrir Chrome, Firefox e Edge (removido na v1.3); CT035 vira teste de viewport mobile. Novo defeito candidato D2 (dados desatualizados entre unidades), que explica O2 e O6. |
 | 1.3 | 2026-09-29 | **CT034 removido** a pedido do responsável, junto com a cobertura de Firefox e Edge: a automação roda só no Chrome. CA11.1 retirado. |
+| 1.4 | 2026-09-29 | Nova tag `@defeito-conhecido` no CT037 (defeito D1), para tirá-lo da regressão agendada no CI sem apagar o cenário. |
 
 ---
 
@@ -192,6 +193,7 @@ Total: **37 CTs** (CT001–CT040, sem CT026, CT027 e CT034).
 | `@negativo` | Entradas inválidas e erros | `npm run test:negativo` |
 | `@mock` | Cenários determinísticos com API mockada | `npm run test:mock` |
 | `@nao-funcional` | Mobile e desempenho | `npm run test:nao-funcional` |
+| `@defeito-conhecido` | Cenários que falham por defeito já registrado no site (hoje: CT037, D1). Ficam fora da regressão agendada no CI (`@regressao and not @defeito-conhecido`) e voltam quando o defeito for corrigido | `npx cypress run --browser chrome --expose "tags=@defeito-conhecido"` |
 | (todas) | Suíte completa no Chrome | `npm test` |
 | — | Modo interativo do Cypress | `npm run cy:open` |
 

@@ -1,0 +1,45 @@
+name: Cypress E2E Tests
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '0 9 * * 1-5' #seg-sex, 6:00 em Brasilia
+  workflow_dispatch:
+   inputs:
+    tags:
+      description: 'Expressão de tags (ex.: @smoke, @regressao and not @mock)'
+      required: true
+      default: '@regressao and not @defeito-conhecido'
+permissions:
+  contents: read
+
+concurrency:
+  group: cypress-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      CYPRESS_BASE_URL: ${{ vars.BASE_URL }}
+      TAGS: ${{ github.event_name == 'workflow_dispatch' && inputs.tags || github.event_name == 'schedule' && '@regressao and not @defeito-conhecido' || '@smoke' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Instalar dependências e rodar o Cypress
+        uses: cypress-io/github-action@v6
+        with:
+          browser: chrome
+          command: npx cypress run --browser chrome --expose "tags=${{ env.TAGS }}"
+      - name: Guardar screenshots das falhas
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
+          retention-days: 14

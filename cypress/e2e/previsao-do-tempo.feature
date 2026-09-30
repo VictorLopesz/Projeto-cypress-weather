@@ -7,6 +7,7 @@
 #   @CTxxx  identificador do caso de teste
 #   @RNxx   regra de negócio coberta
 #   @smoke | @regressao | @negativo | @mock | @nao-funcional  suíte
+#   @defeito-conhecido  falha por defeito já registrado no site (fora da regressão do CI)
 #
 # v1.2 — executado com Cypress + Cucumber (@badeball/cypress-cucumber-preprocessor).
 # v1.1 — cenários ajustados após a sessão exploratória de 2026-09-29 (seção 13 do plano).
@@ -62,7 +63,8 @@ Funcionalidade: Consulta de previsão do tempo
         | sao paulo      | São Paulo, São Paulo           |
         | Rio de Janeiro | Rio de Janeiro, Rio de Janeiro |
 
-    @CT037 @RN01 @regressao
+    # Falha por causa do defeito candidato D1 (plano, seção 14.1). Voltar para a regressão do CI quando for corrigido.
+    @CT037 @RN01 @regressao @defeito-conhecido
     Esquema do Cenário: Sugestões não se repetem
       Quando pesquiso pela cidade "<termo>"
       Então a lista de sugestões não deve conter itens duplicados
